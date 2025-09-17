@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+
+class DB; 
+
+class DM {
+private:
+    int meters;
+    int centimeters;
+
+public:
+    DM() : meters(0), centimeters(0) {}
+
+    void getdata() {
+        cout << "Enter meters: ";
+        cin >> meters;
+        cout << "Enter centimeters: ";
+        cin >> centimeters;
+    }
+
+    void showdata() {
+        cout << meters << " m " << centimeters << " cm" << endl;
+    }
+
+    friend DM add(DM d1, DB d2);
+};
+
+class DB {
+private:
+    int feet;
+    int inches;
+
+public:
+    DB() : feet(0), inches(0) {}
+
+    void getdata() {
+        cout << "Enter feet: ";
+        cin >> feet;
+        cout << "Enter inches: ";
+        cin >> inches;
+    }
+
+    void showdata() {
+        cout << feet << " ft " << inches << " in" << endl;
+    }
+
+    friend DM add(DM d1, DB d2);
+};
+
+DM add(DM d1, DB d2) {
+ 
+    int cm1 = d1.meters * 100 + d1.centimeters;
+
+    int cm2 = (d2.feet * 12 + d2.inches) * 2.54;
+
+
+    int total_cm = cm1 + cm2;
+
+ 
+    DM temp;
+    temp.meters = total_cm / 100;
+    temp.centimeters = total_cm % 100;
+
+    return temp;
+}
+
+int main() {
+    DM d1, result;
+    DB d2;
+
+    cout << "Enter distance in meters/centimeters:\n";
+    d1.getdata();
+
+    cout << "\nEnter distance in feet/inches:\n";
+    d2.getdata();
+
+    result = add(d1, d2);
+
+    cout << "\nResult (in meters/centimeters): ";
+    result.showdata();
+
+    return 0;
+}
